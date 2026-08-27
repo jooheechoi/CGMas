@@ -1,1 +1,1 @@
-# KAIST-AiM4-CGMas
+# CGMas from KAIST_AiM4
