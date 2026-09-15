@@ -1,0 +1,19 @@
+{
+  "model": "gpt-5.4-mini",
+  "price_is_estimate": true,
+  "price_usd_per_1M": {
+    "input": 0.15,
+    "output": 0.6
+  },
+  "llm_calls": 25,
+  "input_tokens": 8989,
+  "output_tokens": 786,
+  "total_tokens": 9775,
+  "cost_usd": {
+    "input": 0.00134835,
+    "output": 0.0004716,
+    "total": 0.00181995
+  },
+  "cost_krw_total": 2.5479,
+  "usd_to_krw": 1400.0
+}
