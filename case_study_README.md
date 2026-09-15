@@ -30,8 +30,7 @@ Start here if you are new to CGMas. It exercises every stage of the pipeline —
 from CGMas import run_cgmas_auto        # or execute the notebook cells
 
 run_cgmas_auto(
-    "Simulate polyethylene at 1 bead per monomer using an all-atom to "
-    "coarse-grained workflow"
+    "Run simulation of polyethylene aa and cg. EQ simulation time for 1 ns. Set 1 bead per monomer."
 )
 ```
 
