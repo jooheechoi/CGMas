@@ -1,0 +1,65 @@
+[ atomtypes ]
+;type	Z	mass	charge	ptype	sigma[A]	epsilon[kcal/mol]	comment
+CT	6	12.011	-0.18	A	3.50E+00	6.60E-02	;alkane CH3
+CT	6	12.011	-0.12	A	3.50E+00	6.60E-02	;alkane CH2
+CT	6	12.011	-0.06	A	3.50E+00	6.60E-02	;alkane CH
+CT	6	12.011	0.00	A	3.50E+00	6.60E-02	;alkane C (quaternary)
+HC	1	1.008	0.06	A	2.50E+00	3.00E-02	;alkane H
+CM	6	12.011	0.00	A	3.55E+00	7.60E-02	;alkene C (R2C=)
+CM	6	12.011	-0.115	A	3.55E+00	7.60E-02	;alkene C (RHC=)
+CM	6	12.011	-0.23	A	3.55E+00	7.60E-02	;alkene C (H2C=)
+HC	1	1.008	0.115	A	2.42E+00	3.00E-02	;alkene H
+CA	6	12.011	-0.115	A	3.55E+00	7.00E-02	;benzene/aryl C (C-H)
+HA	1	1.008	0.115	A	2.42E+00	3.00E-02	;benzene/aryl H
+OH	8	15.9994	-0.683	A	3.12E+00	1.70E-01	;alcohol O (R-OH)
+HO	1	1.008	0.418	A	0.00E+00	0.00E+00	;alcohol H(O)
+OS	8	15.9994	-0.40	A	2.90E+00	1.40E-01	;ether O (R-O-R)
+CT	6	12.011	0.14	A	3.50E+00	6.60E-02	;ether CH2, one O-neighbor (O-CH2, PEO/PPO)
+HC	1	1.008	0.03	A	2.50E+00	3.00E-02	;H on ether CH2 (PEO/PPO)
+CT	6	12.011	0.20	A	3.50E+00	6.60E-02	;acetal CH2, two O-neighbors (O-CH2-O, POM)
+HC	1	1.008	0.10	A	2.50E+00	3.00E-02	;H on acetal CH2 (POM)
+CT	6	12.011	0.205	A	3.50E+00	6.60E-02	;CHOH alcohol alpha-carbon (PVA, PLA)
+C	6	12.011	0.55	A	3.75E+00	1.05E-01	;ester/carbonate C=O
+O	8	15.9994	-0.45	A	2.96E+00	2.10E-01	;ester/carbonate O= (carbonyl)
+OS	8	15.9994	-0.40	A	3.00E+00	1.70E-01	;ester/carbonate O-R (sp3 oxygen)
+CT	6	12.011	0.12	A	3.50E+00	6.60E-02	;ester O-CH3/O-CH2 alkyl (PMMA/PET/PVAc)
+CT	6	12.011	0.24	A	3.50E+00	6.60E-02	;ester alpha-CH bonded to OS (PLA, PVAc)
+C	6	12.011	0.52	A	3.75E+00	1.05E-01	;carboxylic acid C=O (PAA, PMAA)
+O	8	15.9994	-0.50	A	2.96E+00	2.10E-01	;carboxylic acid O= (carbonyl)
+OH	8	15.9994	-0.53	A	3.00E+00	1.70E-01	;carboxylic acid O-H (PAA, PMAA)
+HO	1	1.008	0.45	A	0.00E+00	0.00E+00	;carboxylic acid H(O) (PAA, PMAA)
+C	6	12.011	0.50	A	3.75E+00	1.05E-01	;amide C=O
+O	8	15.9994	-0.50	A	2.96E+00	2.10E-01	;amide O
+N	7	14.0067	-0.76	A	3.25E+00	1.70E-01	;N primary amide
+N	7	14.0067	-0.50	A	3.25E+00	1.70E-01	;N secondary amide
+N	7	14.0067	-0.14	A	3.25E+00	1.70E-01	;N tertiary amide
+H	1	1.008	0.38	A	0.00E+00	0.00E+00	;H(N) primary amide
+H	1	1.008	0.30	A	0.00E+00	0.00E+00	;H(N) secondary amide
+N	7	14.0067	-0.49	A	3.25E+00	1.70E-01	;imide N
+C	6	12.011	0.42	A	3.75E+00	1.05E-01	;imide C=O
+O	8	15.9994	-0.42	A	2.96E+00	2.10E-01	;imide O
+H	1	1.008	0.37	A	0.00E+00	0.00E+00	;imide H(N)
+NT	7	14.0067	-0.78	A	3.30E+00	1.70E-01	;secondary amine N
+H	1	1.008	0.38	A	0.00E+00	0.00E+00	;secondary amine H(N)
+SH	16	32.06	-0.335	A	3.60E+00	4.25E-01	;thiol S (RSH)
+S	16	32.06	-0.335	A	3.60E+00	3.55E-01	;sulfide S (RSR, aliphatic)
+HS	1	1.008	0.155	A	0.00E+00	0.00E+00	;thiol H(S)
+SY2	16	32.06	1.374	A	3.55E+00	2.50E-01	;sulfone S
+OY	8	15.9994	-0.687	A	2.96E+00	1.70E-01	;sulfone O
+CT	6	12.011	0.055	A	3.50E+00	6.60E-02	;benzylic CH (CHPh, PS backbone)
+CA	6	12.011	0.20	A	3.55E+00	7.00E-02	;aryl C bonded to ether O (PPO, PC, PET)
+CA	6	12.011	0.00	A	3.55E+00	7.00E-02	;substituted aryl ipso C (biphenyl/parylene/PPP/PPV C-C link)
+S	16	32.06	-0.32	A	3.55E+00	2.50E-01	;thioether S aryl (PPS, polyphenylene sulfide)
+CT	6	12.011	0.25	A	3.50E+00	6.60E-02	;CH alpha to nitrile (PAN backbone)
+CZ	6	12.011	0.51	A	3.65E+00	1.50E-01	;nitrile C (C-N, PAN)
+NZ	7	14.0067	-0.82	A	3.40E+00	2.50E-01	;nitrile N (C-N, PAN)
+Cl	17	35.453	-0.20	A	3.40E+00	3.00E-01	;alkyl chloride Cl (R-CH2Cl)
+CT	6	12.011	-0.006	A	3.50E+00	6.60E-02	;CH2Cl carbon (primary)
+HC	1	1.008	0.103	A	2.50E+00	3.00E-02	;H on CH2Cl
+CT	6	12.011	0.14	A	3.50E+00	6.60E-02	;CHCl secondary alpha-carbon (PVC)
+Cl	17	35.453	-0.12	A	3.40E+00	3.00E-01	;vinyl/vinylidene Cl (PVDC CCl2, polychloroprene C=C)
+CT	6	12.011	0.24	A	3.50E+00	6.60E-02	;CCl2 carbon (PVDC vinylidene chloride)
+CT	6	12.011	0.36	A	3.50E+00	6.60E-02	;CF3 (perfluoro terminal)
+CT	6	12.011	0.24	A	3.50E+00	6.60E-02	;CF2 (perfluoro backbone, PTFE/PVDF)
+CT	6	12.011	0.12	A	3.50E+00	6.60E-02	;CF (perfluoro branch)
+F	9	18.9984	-0.12	A	2.95E+00	5.30E-02	;F (perfluoro, PVDF/PTFE)
