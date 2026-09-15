@@ -1,43 +1,13 @@
-# CGMas — Python dependencies
-#
-# Requires Python 3.10 or later.
-#
-#   pip install -r requirements.txt
-#
-# Versions are pinned to those used for the published results. See the
-# LAMMPS note at the bottom of this file before installing.
-
-# --- Agent framework ---------------------------------------------------------
 langchain-core==0.3.79
 langchain-openai==0.3.35
 langgraph==0.6.7
 langgraph-checkpoint==2.1.1
 python-dotenv==1.1.1
-
-# --- Numerics and analysis ---------------------------------------------------
 numpy==1.26.4
 scipy==1.15.2
 pandas==2.3.3
 matplotlib==3.10.8
-
-# --- Notebook interface ------------------------------------------------------
 ipykernel==6.30.1
 ipython==8.37.0
-jupyterlab>=4.0            # only needed to open CGMas.ipynb
-
-# --- Molecular dynamics engine -----------------------------------------------
-# Unofficial LAMMPS wheels (https://github.com/njzjz/lammps-wheel), built
-# against MPICH on Linux and macOS and against Microsoft MPI on Windows.
-# CGMas launches LAMMPS with `mpirun -np N python ...`, so the mpirun on your
-# PATH must come from the SAME MPI implementation this wheel was built against.
-# Mixing OpenMPI's mpirun with these wheels silently launches N independent
-# serial runs instead of one parallel run.
-#
-# If you already have a LAMMPS build with the Python module enabled
-# (`-D BUILD_SHARED_LIBS=ON -D PKG_PYTHON=ON`, then `make install-python`),
-# comment out the line below and use that build instead.
+jupyterlab>=4.0
 lammps==2024.8.29.3.0
-
-# --- Optional: alternative reasoning backbones -------------------------------
-# Uncomment to run CGMas on a non-OpenAI model (see docs/MANUAL.md §3.2).
-# langchain-anthropic==0.3.21
