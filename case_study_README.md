@@ -1,6 +1,6 @@
 # Case study 1 — Polyethylene at one bead per monomer
 
-The simplest complete CGMas run: a linear hydrocarbon backbone mapped at one bead per repeat unit, executed end to end from a single query with no human intervention. This is the run shown in Figure 5a of the paper.
+The complete CGMas run: a linear hydrocarbon backbone mapped at one bead per repeat unit, executed end to end from a single query with no human intervention.
 
 Start here if you are new to CGMas. It exercises every stage of the pipeline — topology generation and self-correction, all-atom equilibration, bead mapping, potential derivation, CG equilibration, *T*<sub>g</sub> extraction, and validation — on a chemistry simple enough that each intermediate result can be checked by inspection.
 
