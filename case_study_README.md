@@ -188,12 +188,3 @@ Suggested replies:
 | CG simulation | `ok, let's start the coarse-grained simulation` |
 | *T*<sub>g</sub> annealing | `yes, run the Tg annealing` |
 
----
-
-## 6. Next steps
-
-| | |
-|---|---|
-| [`../02_polyacrylonitrile`](../02_polyacrylonitrile) | two bead types per monomer — multiple bond, angle, and pair types |
-| [`../03_copolymer`](../03_copolymer) | independent topology generation for two comonomers, then merging |
-| [`../benchmark`](../benchmark) | all 27 tasks across the five difficulty levels |
