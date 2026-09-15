@@ -358,9 +358,6 @@ Passed to `compute_cg_potentials_multi()`.
 | `rdf_bins` | RDF histogram bins | 500 |
 | `rdf_frac` | RDF cutoff as a fraction of the shortest box edge | 0.35 |
 | `rdf_exclude_depth` | bonded neighbours excluded from the RDF; 3 excludes 1-2, 1-3, 1-4 | 3 |
-| `energy_matching` | rescale each LJ ε to the AA intermolecular cohesive energy per bead | `True` |
-| `epsilon_scale` | fixed extra multiplier on ε, used only when energy matching is off | 1.0 |
-| `cg_pair_cutoff` | cutoff used in the energy-matching integral | 10.0 Å |
 
 Increase `bond_bins` or `rdf_bins` for noisy distributions; increase the equilibration time or the system size instead if a distribution is under-sampled, since finer bins add no information.
 
@@ -448,7 +445,6 @@ Bonded distributions and the pair RDF are accumulated from the mapped trajectory
 
 The *l*² and sin θ terms account for the configurational degeneracy at fixed bond length and fixed angle. The inverted curves are fitted to harmonic bond and angle forms and to a 12-6 Lennard-Jones pair form. Each sampled distribution is written to its own CSV file in the session directory.
 
-**Energy matching.** Boltzmann inversion of *g*(*r*) returns the potential of mean force, whose well depth is far shallower than the effective pair interaction required to hold a melt together; used directly, the CG system expands without bound. Each LJ ε is therefore rescaled so that the CG pair potential reproduces the all-atom intermolecular cohesive energy per bead, integrated to `cg_pair_cutoff` at the AA equilibrium density. This is enabled by default (`energy_matching=True`) and applies to every derived pair type.
 
 **Review.** A review agent cross-checks the fitted set against the enumerated interaction types. Types present in the topology but absent from the results are added and recomputed. Angle equilibria above 180°, and entries with both a vanishing force constant and a vanishing equilibrium value — indicating the type was never sampled — are removed. Bond equilibrium lengths below 1.5 Å are flagged as unphysical for beads representing several atoms. A vanishing pair well depth is retained but reported as insufficiently sampled. The backbone–backbone–backbone angle is restored if missing. Interaction types you specified explicitly are protected from automatic removal.
 
@@ -503,11 +499,9 @@ One CSV triple is written per interaction type, so a one-bead mapping produces t
 
 `chat_log.json` is the reproducibility record: it contains every decision the reasoning layer made, including the validator feedback that triggered each correction cycle. Include it when reporting a problem.
 
-`cgmas_log.txt` is written to the notebook's working directory, not here. See [§4.4](#44-console-logging).
-
 ### 8.2 Where the derived CG parameters are
 
-**There is no separate parameter file.** The fitted values are written directly into the generated CG input script as LAMMPS coefficient commands:
+The fitted values are written directly into the generated CG input script as LAMMPS coefficient commands:
 
 ```
 bond_coeff   1  <k>  <r0>
@@ -566,32 +560,7 @@ For copolymers each bead type additionally carries `monomer_type`, naming the co
 
 ---
 
-## 9. Extending CGMas
-
-### 9.1 Adding OPLS-AA atom types
-
-The topology agent selects among the entries of `opls-aa/atom.txt` and introduces none of its own, so extending coverage means extending the table.
-
-1. Add a row to `atom.txt` with a unique key, mass, partial charge, LJ ε and σ, and a `comment` describing the chemical environment. **The comment matters**: it is the only description the agent reads when matching an atom to a type, so state the hybridization, the neighbouring atoms, and the functional-group context explicitly.
-2. Add the corresponding bond, angle, and dihedral entries to the other three files. Missing bonded parameters fall back to the element-pair defaults in `aa_constructor.py`, which are approximate and should not be relied on for a published result.
-3. If the new type needs a validator rule — for instance a hydrogen subtype with a restricted set of acceptable bonded carbons — add it to the hydrogen-typing validator.
-4. Test on a polymer whose repeat unit contains the new type, and confirm that no `[Auto-neutralize residual]` line appears, before using it in a benchmark.
-
-### 9.2 Substituting the reasoning backbone
-
-Replace the `ChatOpenAI(...)` line in cell 2 as in [§3.2](#32-reasoning-backbone). Nothing else needs to change: every agent receives its schema in the system prompt and every output is validated downstream, so the framework does not depend on provider-specific features such as structured-output modes. Add the new model to `TOKEN_PRICES_USD_PER_1M` for cost accounting.
-
-### 9.3 Copolymer architectures
-
-`copolymer.py` generates the chain sequences. `generate_sequence()` implements random, alternating, block, and periodic architectures from mole fractions, block lengths, or a repeat pattern; `graft_branch_positions()` handles graft placement. A new architecture is added by extending `generate_sequence()` and adding the corresponding keyword to the parsing prompt in `copolymer_spec_node`.
-
-### 9.4 Alternative inversion schemes
-
-Only direct Boltzmann inversion with energy matching is implemented. Iterative Boltzmann inversion or force matching would replace the single-pass fit in `compute_cg_potentials_multi()` with a loop that re-runs the CG simulation and updates the potential from the discrepancy between the CG and target distributions. The mapping, topology, and validation stages are independent of this choice and would not need modification.
-
----
-
-## 10. Troubleshooting
+## 9. Troubleshooting
 
 | Symptom | Cause and remedy |
 |---|---|
@@ -604,40 +573,8 @@ Only direct Boltzmann inversion with energy matching is implemented. Iterative B
 | `[Auto-neutralize residual]` appears | The table had no exactly neutral typing for the repeat unit. The run continues, but the charge distribution is approximate; expect a larger density error. |
 | `No equilibration trajectory found` | The AA run did not produce `aa_fin.lammpstrj`. Check `lammps_aa.log` for the LAMMPS error that aborted it. |
 | A pair type reports a vanishing well depth | That bead pair was insufficiently sampled. Increase the equilibration time, *N*<sub>c</sub>, or *N*<sub>m</sub>. |
-| CG melt expands or evaporates | Energy matching was disabled, or `epsilon_scale` was set too low. Restore `energy_matching=True`. |
 | Bond equilibrium length flagged below 1.5 Å | The mapping probably places two beads on atoms that are not separated along the chain. Restate the partition. |
 | CG density deviates by more than 5 % | Check the AA reference first: the traces in `lammps_aa.log` must be stationary before mapping. Polar backbones and bulky side groups are the known weak cases ([§11](#11-limitations)). |
 | *T*<sub>g</sub> fit rejected | The cooling scan did not produce two branches of the expected slope ordering. Check the reference *T*<sub>g</sub> the validator printed; if it is far from the literature value the window was misplaced. |
 | A temperature stated in an automated query had no effect | Temperature is not one of the six parsed directives. Use interactive mode or edit `simulator.py`. See [§4.2](#42-automated-mode). |
 
----
-
-## 11. Limitations
-
-- **Chemical coverage is bounded by the supplied table.** Every atom-type assignment is traceable to a tabulated force field, and none is invented by the language model. Exotic functional groups, metal-containing repeat units, and charged monomers such as polyelectrolytes fall outside the present OPLS-AA table.
-- **Direct Boltzmann inversion with energy matching** reproduces the sampled distributions and the cohesive energy by construction, but does not self-consistently optimize the pair correlation, so structural agreement is not guaranteed wherever the density is matched. Iterative schemes are not implemented.
-- **Known weak cases.** In the benchmark, the largest density deviations occurred for repeat units carrying oxygen in the backbone or in an ester linkage, where the partial charges of the oxygen and its neighbouring carbons balance against one another so that an assignment satisfying overall neutrality can still distribute charge incorrectly. Styrenic repeat units also exceeded the band narrowly, placing a phenyl ring in a bead of unusually large collision diameter.
-- **The validation criterion is bulk density.** A criterion that suffices for a polymer melt does not carry over to an interface, a mechanical response, or a phase transition. Extending CGMas to those targets requires its own basis for evaluation.
-- **The reasoning layer is not strictly deterministic** even at `temperature=0`. The number of self-correction cycles, and therefore the token cost, varies between runs. The physical output does not: density error reproduced to within 0.03 percentage points across repeated runs, while cost varied by up to 26 % for the same task.
-- **Sessions cannot be resumed.** A failed run must be restarted from the beginning.
-- **Tacticity, molecular-weight distribution, and branching beyond the graft architecture** are not modelled. All chains in a system have the same length.
-
----
-
-## 12. Reproducing the benchmark
-
-The benchmark comprises 27 tasks in a five-level difficulty ramp: hydrocarbons (4), heteroatom-substituted repeat units (7), complex side chains (9), multifunctional repeat units (3), and copolymers (4). Every task was run with the default construction and equilibration parameters, so each is a single `run_cgmas_auto()` call of the form
-
-```python
-run_cgmas_auto(
-    "Run simulation of <polymer> aa and cg. <bead mapping description>."
-)
-```
-
-Levels 1 and 2 use one bead per repeat unit, so the mapping clause is `Set 1 bead per monomer`. Levels 3 to 5 need two or more bead types; state the partition explicitly, as in [§5.3](#53-bead-resolution).
-
-Three metrics are recorded per task: whether it completed and satisfied the density criterion within the iteration limits, the density error of completed tasks, and the cost in wall-clock simulation time, LLM calls, tokens, and dollars. The first two are read from `lammps_aa.log` and `lammps_cg.log`, the last from `token_cost.txt`. On the reference workstation (Intel Core i7-14700K, 12 MPI processes), the AA reference runs take 38–88 min per task and the CG runs about 1 min.
-
-Exact agreement with the published numbers is not expected for token counts and cost, which depend on the number of self-correction cycles and therefore on the backbone and on run-to-run variation. The density and *T*<sub>g</sub> results are reproducible to the precision quoted in the paper, provided `DEFAULT_SEED` is unchanged.
-
-A fully worked single task, with its session directory and the two robustness tables, is in [`examples/polyethylene`](../examples/polyethylene).
