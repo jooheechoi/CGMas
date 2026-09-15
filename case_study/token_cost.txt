@@ -1,7 +1,0 @@
-Token usage & cost
-  Model           : gpt-5.4-mini  (price is a PLACEHOLDER/ESTIMATE -- edit TOKEN_PRICES_USD_PER_1M)
-  LLM calls       : 25
-  Input tokens    : 8,989  @ $0.150/1M = $0.00134835
-  Output tokens   : 786  @ $0.600/1M = $0.00047160
-  Total tokens    : 9,775
-  Total cost      : $0.00181995  (~2.5479 KRW @ 1400/$)
