@@ -11,15 +11,14 @@ Start here if you are new to CGMas. It exercises every stage of the pipeline —
 ## Contents
 
 ```
-01_polyethylene/
+polyethylene/
 ├── README.md              this file
 ├── run.py                 the run, as a script
-├── session/               reference session directory from our run
+└── session/               reference session directory from our run
 │   ├── chat_log.json      every agent decision and reply
 │   ├── cgmas_log.txt      full console output
-│   ├── potentials.json    derived CG parameters
+│   ├── potentials.csv     derived CG parameters
 │   └── *.png              distributions, property traces, Tg fit
-└── expected_output.md     what each stage should print
 ```
 
 ---
@@ -27,7 +26,7 @@ Start here if you are new to CGMas. It exercises every stage of the pipeline —
 ## 1. Running it
 
 ```python
-from CGMas import run_cgmas_auto        # or execute the notebook cells
+from CGMas import run_cgmas_auto
 
 run_cgmas_auto("Run simulation of polyethylene aa and cg. EQ simulation time for 1 ns. Set 1 bead per monomer.")
 ```
