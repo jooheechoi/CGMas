@@ -16,7 +16,7 @@ Bottom-up coarse-grained (CG) molecular dynamics extends polymer simulation beyo
 
 ## Overview of CGMas for automation of polymer coarse-graining
 
-We assessed the robustness of the CGMas system using a twenty-seven-task benchmark suite organized as a five-level difficulty ramp, covering: **hydrocarbons** (4 tasks), **heteroatom-substituted repeat units** (7 tasks), **complex side chains** (9 tasks), **multifunctional repeat units** (3 tasks), and **copolymers** (4 tasks). For the 27 benchmark tasks, CGMas demonstrates the ability to generate physically meaningful CG models without user-supplied topologies or simulation scripts, completing every task, matching the AA equilibrium density to within 5% in 22 of them, and reducing the effective simulation turnaround from 38–88 min to 1 min per task at a reasoning cost of approximately $0.002 per task (Figure 2).
+We assessed the robustness of the CGMas system using a twenty-seven-task benchmark suite organized as a five-level difficulty ramp, covering: **hydrocarbons** (4 tasks), **heteroatom-substituted repeat units** (7 tasks), **complex side chains** (9 tasks), **multifunctional repeat units** (3 tasks), and **copolymers** (4 tasks). For the 27 benchmark tasks, CGMas demonstrates the ability to generate physically meaningful CG models without user-supplied topologies or simulation scripts, completing every task, matching the AA equilibrium density to within 5% in 22 of them, and reducing the effective simulation turnaround from 38–88 min to 1 min per task at a reasoning cost of approximately $0.002 per task.
 
 ## Requirements
 
