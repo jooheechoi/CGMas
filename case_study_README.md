@@ -29,18 +29,13 @@ Start here if you are new to CGMas. It exercises every stage of the pipeline —
 ```python
 from CGMas import run_cgmas_auto        # or execute the notebook cells
 
-run_cgmas_auto(
-    "Run simulation of polyethylene aa and cg. EQ simulation time for 1 ns. Set 1 bead per monomer."
-)
+run_cgmas_auto("Run simulation of polyethylene aa and cg. EQ simulation time for 1 ns. Set 1 bead per monomer.")
 ```
 
-Equivalently, from the notebook, execute cells 0–17 and then:
+Equivalently, from the notebook, execute cells and then:
 
 ```python
-session_dir = run_cgmas_auto(
-    "Simulate polyethylene at 1 bead per monomer using an all-atom to "
-    "coarse-grained workflow"
-)
+session_dir = run_cgmas_auto("Run simulation of polyethylene aa and cg. EQ simulation time for 1 ns. Set 1 bead per monomer.")
 print(session_dir)
 ```
 
